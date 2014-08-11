@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+Dir["./app/**/*.rb"].each { |f| require f }
+Dir["./lib/**/*.rb"].each { |f| require f }
+
+
+Environment.environment = ENV["DB"] || "development"
+
+def clean_gets
+  (gets || "").chomp
+end
+
+puts 'Welcome to caltracker, where you can add food items and track your calories each day. Please enter add to add a new food item, manage to manage your meals or view to check out your calorie count for today'
+choice = clean_gets
+if choice == 'add'
+  fooditems_controller = FoodItemsController.new()
+  fooditems_controller.add
+elsif choice == 'manage'
+  meal_controller = MealController.new()
+  meal_controller.add
+elsif choice =='view'
+  view_controller = ViewController.new()
+  view_controller.view
+else
+  puts 'I do not recognize that command'
+end
