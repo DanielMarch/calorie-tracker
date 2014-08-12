@@ -8,9 +8,14 @@ class Food
   end
 
   def self.create(options)
-    food = Food.new(options)
-    food.save
-    food
+    row = Environment.database.execute("SELECT * FROM food WHERE name	LIKE '#{options[:name]}'")
+    if row == []
+      food = Food.new(options)
+      food.save
+      food
+    else
+      puts 'That food already exists'
+    end
   end
 
   def save
